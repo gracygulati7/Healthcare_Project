@@ -7,6 +7,6 @@
 3. General Consultancy
 4. Lab tests
 5. Dr. Appointments
-6. Ambulance Tracking
+6. Ambulance Tracking - Google Maps 
 7. Routine Checking
 
