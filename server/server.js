@@ -24,6 +24,15 @@ const app = express();
 // either file is frontend or backend pass all configurations through env file only.
 const port = process.env.PORT || 5000;
 
+// const path = require('path');
+// const hbs = require('hbs'); 
+
+// // Set the views directory
+// app.set('views', path.join(__dirname, 'views'));
+
+// // Register the partials directory for hbs
+// hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+
 app.use(express.json());
 app.use(cors());
 // error handler middleware
@@ -33,9 +42,22 @@ app.use(errorHandler);
 app.get("/", (req, res) => {
     res.send("Working");
 });
+app.get("/home",(req,res)=>{
+    // let user = User.findOne({id:})
+    res.render("home",{})
+});
+app.get("/allusers",(req,res)=>{
+    res.render("users",{
+        users:[{id:1,username:"Gracy", age:20},
+            {id:1,username:"Sorabh", age:23}
+        ]
+    })
+})
+
 
 // app config start
 app.listen(port,()=> {
     console.log(`Server is running on port http://localhost:${port}`);
 });
 
+app.set('view engine','hbs');
