@@ -11,27 +11,24 @@ const cors = require("cors"); // cors for security at server side
 // CORS - Cross-Origin Resource Sharing.
 // It is a security feature implemented by browsers to prevent malicious websites from making requests to your server.
 
+const app = express();
+
 // env file config
 const dotenv = require("dotenv");
 dotenv.config();
 // we install dotenv package to use environment variables in our application.
 
 connectDb(); // db connection setup for crud operations
-const app = express();
 
-// process.env.PORT is used to get the port number from the environment variable PORT
+// process.env.PORT is used to get the port number ,from the environment variable PORT
 // If the environment variable PORT is not set, then the port number is set to 5000
 // either file is frontend or backend pass all configurations through env file only.
 const port = process.env.PORT || 5000;
 
-// const path = require('path');
-// const hbs = require('hbs'); 
+var hbs=require('hbs');
+hbs.registerPartials(__dirname+'/views/partials',function(err){});
+app.set('view engine','hbs');
 
-// // Set the views directory
-// app.set('views', path.join(__dirname, 'views'));
-
-// // Register the partials directory for hbs
-// hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 app.use(express.json());
 app.use(cors());
@@ -42,22 +39,31 @@ app.use(errorHandler);
 app.get("/", (req, res) => {
     res.send("Working");
 });
+
 app.get("/home",(req,res)=>{
     // let user = User.findOne({id:})
-    res.render("home",{})
+    res.render("home",{
+        username:"Gracy",
+        posts:"bla bla bla"
+    })
 });
 app.get("/allusers",(req,res)=>{
-    res.render("users",{
-        users:[{id:1,username:"Gracy", age:20},
-            {id:1,username:"Sorabh", age:23}
-        ]
-    })
-})
+    const users=[
+        {username:"Gracy",age:20},
+        {username:"Sorabh",age:23},
+        {username:"Buddy",age:25}
 
+    ];
+    res.render("allusers",{
+       users:users
+    });
+});
+
+// Route for user registration and authetication
+app.use("/api/",require("./Routes/userRoutes"));
 
 // app config start
 app.listen(port,()=> {
     console.log(`Server is running on port http://localhost:${port}`);
 });
 
-app.set('view engine','hbs');
