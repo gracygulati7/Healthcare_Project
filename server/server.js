@@ -61,6 +61,7 @@ app.get("/allusers",(req,res)=>{
 
 // Route for user registration and authetication
 app.use("/api/",require("./Routes/userRoutes"));
+app.use("/api/details",require("./Routes/doctorDetails"));
 
 // app config start
 app.listen(port,()=> {

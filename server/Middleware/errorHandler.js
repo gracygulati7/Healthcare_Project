@@ -1,4 +1,4 @@
-const { constants } = require('../constants');
+const { constants } = require('../constants'); // coz of multiple key-value pairs(we have to pick one of them),so it is in form of object
 const errorHandler = (err, req, res, next) => {
     const statusCode = res.statusCode ? res.statusCode : 500;
     switch (statusCode) {
@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
                 stackTrace: err.stack, // gives the complete path that where is the issue
             });
 
-            break;
+            break; // break is used for closing server
             case constants.NOT_FOUND:
                 res.json({
                     title: "Not Found",
@@ -31,6 +31,12 @@ const errorHandler = (err, req, res, next) => {
                         stackTrace: err.stack
                     });
 
+                case constants.FORBIDDEN:
+                        res.json({
+                            title:"Forbidden",
+                            message: err.message,
+                            stackTrace:err.stack,
+                    });
                 default:
                     console.log("No error, All Good!!");
                     break;
