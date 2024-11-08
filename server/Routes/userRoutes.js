@@ -54,10 +54,9 @@ const {
     registerUser,loginUser
     
 }=require("../Controllers/userController");
+const {validateJwtToken}=require("../Middleware/jwtMiddleware");
 
 //route for user registration
 router.post("/register",registerUser);
-router.post("/login", loginUser);
-//route for user login
-//router.post("/login",loginUser);
+router.post("/login",validateJwtToken, loginUser);
 module.exports=router;
