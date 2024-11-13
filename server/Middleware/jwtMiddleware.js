@@ -12,12 +12,14 @@ const generateJwtToken = (userData) => {
 const validateJwtToken = (req, res, next) => {
     // we are checking that token is available or not in request headers.
     const tokenCheck = req.headers.authorization;
+
     // OPTION 1: req header token, authorization, is not sent. (does not exist)
     // 401 - Unauthorized: The request has not been applied because it lacks valid authentication credentials for the target resource.
     // 403 - Forbidden: The server understood the request, but is refusing to authorize it.
     if (!tokenCheck) {
         return res.status(401).json({ err: 'TOKEN NOT AVAILABLE' });
     }
+    
     // OPTION 2: req header getting token token: but not in a right format.
     // Authorization: BASIC/BEARER
     // BASIC - btoa(USERNAME:PASSWORD) -> BASIC wyvdhbwefejsfb (JWT TOKEN)   [BASE64]
